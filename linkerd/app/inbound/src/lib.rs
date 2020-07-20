@@ -23,7 +23,7 @@ use linkerd2_app_core::{
     spans::SpanConverter,
     svc::{self, NewService},
     transport::{self, io::BoxedIo, listen, tls},
-    Error, ProxyMetrics, TraceContextLayer, DST_OVERRIDE_HEADER,
+    AccessLogLayer, Error, ProxyMetrics, TraceContextLayer, DST_OVERRIDE_HEADER,
 };
 use std::collections::HashMap;
 use tokio::sync::mpsc;
@@ -328,9 +328,12 @@ impl Config {
             // Synthesizes responses for proxy errors.
             .push(errors::layer());
 
-        let http_server_observability = svc::layers().push(TraceContextLayer::new(
-            span_sink.map(|span_sink| SpanConverter::server(span_sink, trace_labels())),
-        ));
+        let http_server_observability =
+            svc::layers()
+                .push(AccessLogLayer::new())
+                .push(TraceContextLayer::new(span_sink.map(|span_sink| {
+                    SpanConverter::server(span_sink, trace_labels())
+                })));
 
         let http_server = svc::stack(http_router)
             // Ensures that the built service is ready before it is returned

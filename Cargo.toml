@@ -1,6 +1,7 @@
 [workspace]
 members = [
     "hyper-balance",
+    "linkerd/access-log",
     "linkerd/addr",
     "linkerd/admit",
     "linkerd/app/core",

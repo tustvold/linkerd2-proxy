@@ -9,6 +9,7 @@
 
 #![deny(warnings, rust_2018_idioms)]
 
+pub use linkerd2_access_log::tower::AccessLogLayer;
 pub use linkerd2_addr::{self as addr, Addr, NameAddr};
 pub use linkerd2_admit as admit;
 pub use linkerd2_cache as cache;

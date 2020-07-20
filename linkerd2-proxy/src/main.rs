@@ -27,7 +27,15 @@ fn main() {
     };
 
     rt::build().block_on(async move {
-        let app = match async move { config.build(trace?).await }.await {
+        let (handle, _guard) = match trace {
+            Ok(x) => x,
+            Err(e) => {
+                eprintln!("Initialization failure: {}", e);
+                std::process::exit(1);
+            }
+        };
+
+        let app = match async move { config.build(handle).await }.await {
             Ok(app) => app,
             Err(e) => {
                 eprintln!("Initialization failure: {}", e);

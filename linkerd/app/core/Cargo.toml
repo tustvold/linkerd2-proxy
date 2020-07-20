@@ -21,6 +21,7 @@ http-body = "0.3"
 hyper = "0.13.7"
 futures = "0.3"
 indexmap = "1.0"
+linkerd2-access-log = { path = "../../access-log" }
 linkerd2-addr = { path = "../../addr" }
 linkerd2-admit = { path = "../../admit" }
 linkerd2-cache = { path = "../../cache" }
@@ -67,6 +68,7 @@ tokio-timer = "0.2"
 tower-request-modifier = { git = "https://github.com/tower-rs/tower-http" }
 tonic = { version = "0.2", default-features = false, features = ["prost"] }
 tracing = "0.1.19"
+tracing-appender = "0.1.1"
 tracing-futures = { version = "0.2", features = ["std-future"] }
 tracing-log = "0.1"
 pin-project = "0.4"
